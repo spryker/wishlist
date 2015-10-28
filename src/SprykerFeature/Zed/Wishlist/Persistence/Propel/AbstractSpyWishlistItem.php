@@ -2,10 +2,10 @@
 
 namespace SprykerFeature\Zed\Wishlist\Persistence\Propel;
 
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\Base\SpyWishlist as BaseSpyWishlist;
+use Orm\Zed\Wishlist\Persistence\Base\SpyWishlistItem as BaseSpyWishlistItem;
 
 /**
- * Skeleton subclass for representing a row from the 'spy_wishlist' table.
+ * Skeleton subclass for representing a row from the 'spy_wishlist_item' table.
  *
  *
  *
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Wishlist\Persistence\Propel\Base\SpyWishlist as BaseSpyWi
  * long as it does not already exist in the output directory.
  *
  */
-class SpyWishlist extends BaseSpyWishlist
+abstract class AbstractSpyWishlistItem extends BaseSpyWishlistItem
 {
 
 }
