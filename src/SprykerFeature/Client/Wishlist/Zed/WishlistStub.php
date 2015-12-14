@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Wishlist\Service\Zed;
+namespace SprykerFeature\Client\Wishlist\Zed;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
+use SprykerFeature\Client\ZedRequest\ZedRequestClient;
 
 class WishlistStub implements WishlistStubInterface
 {

@@ -4,19 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Wishlist\Service;
+namespace SprykerFeature\Client\Wishlist;
 
-use SprykerFeature\Client\Wishlist\Service\Storage\WishlistStorage;
-use SprykerFeature\Client\Wishlist\Service\Zed\WishlistStub;
-use SprykerFeature\Client\Wishlist\Service\Session\WishlistSession;
-use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
-use SprykerFeature\Client\Customer\Service\CustomerClientInterface;
-use SprykerFeature\Client\Wishlist\Service\Session\WishlistSessionInterface;
-use SprykerFeature\Client\Wishlist\Service\Storage\WishlistStorageInterface;
-use SprykerFeature\Client\Wishlist\Service\Zed\WishlistStubInterface;
+use SprykerFeature\Client\Wishlist\Storage\WishlistStorage;
+use SprykerFeature\Client\Wishlist\Zed\WishlistStub;
+use SprykerFeature\Client\Wishlist\Session\WishlistSession;
+use SprykerEngine\Client\Kernel\AbstractDependencyContainer;
+use SprykerFeature\Client\Customer\CustomerClientInterface;
+use SprykerFeature\Client\Wishlist\Session\WishlistSessionInterface;
+use SprykerFeature\Client\Wishlist\Storage\WishlistStorageInterface;
+use SprykerFeature\Client\Wishlist\Zed\WishlistStubInterface;
 use SprykerFeature\Client\Wishlist\WishlistDependencyProvider;
 
-class WishlistDependencyContainer extends AbstractServiceDependencyContainer
+class WishlistDependencyContainer extends AbstractDependencyContainer
 {
 
     /**

@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Wishlist\Service\Storage;
+namespace SprykerFeature\Client\Wishlist\Storage;
 
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
-use SprykerFeature\Client\Product\Service\ProductClientInterface;
-use SprykerFeature\Client\Storage\Service\StorageClientInterface;
+use SprykerFeature\Client\Product\ProductClientInterface;
+use SprykerFeature\Client\Storage\StorageClientInterface;
 
 class WishlistStorage implements WishlistStorageInterface
 {
