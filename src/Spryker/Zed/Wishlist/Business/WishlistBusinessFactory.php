@@ -24,7 +24,7 @@ use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 /**
  * @method WishlistQueryContainer getQueryContainer()
  */
-class WishlistDependencyContainer extends AbstractBusinessFactory
+class WishlistBusinessFactory extends AbstractBusinessFactory
 {
 
     /**

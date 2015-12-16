@@ -16,7 +16,7 @@ use Spryker\Client\Wishlist\Storage\WishlistStorageInterface;
 use Spryker\Client\Wishlist\Zed\WishlistStubInterface;
 use Spryker\Client\Wishlist\WishlistDependencyProvider;
 
-class WishlistDependencyContainer extends AbstractFactory
+class WishlistFactory extends AbstractFactory
 {
 
     /**
