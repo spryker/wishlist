@@ -9,10 +9,12 @@ namespace Spryker\Client\Wishlist;
 
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
@@ -131,7 +133,7 @@ interface WishlistClientInterface
     public function getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer);
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -149,7 +151,8 @@ interface WishlistClientInterface
     public function getCustomerWishlistCollection();
 
     /**
-     * - Specification: Retrieving wishlist collection by customer transfer.
+     * Specification:
+     * - Retrieves wishlist collection by customer transfer.
      *
      * @api
      *

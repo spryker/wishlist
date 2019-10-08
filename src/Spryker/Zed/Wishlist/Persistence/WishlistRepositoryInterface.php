@@ -8,6 +8,8 @@
 namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistRepositoryInterface
 {

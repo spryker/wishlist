@@ -8,7 +8,9 @@
 namespace Spryker\Zed\Wishlist\Business\Model;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 
 interface ReaderInterface

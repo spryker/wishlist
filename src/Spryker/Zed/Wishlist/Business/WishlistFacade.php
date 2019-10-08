@@ -8,9 +8,11 @@
 namespace Spryker\Zed\Wishlist\Business;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
+use Generated\Shared\Transfer\WishlistResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Kernel\Business\AbstractFacade;
 
@@ -21,7 +23,7 @@ use Spryker\Zed\Kernel\Business\AbstractFacade;
 class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -37,7 +39,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -53,7 +55,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -69,7 +71,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -85,7 +87,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -101,7 +103,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -132,7 +134,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -148,7 +150,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -164,7 +166,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -180,7 +182,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -196,7 +198,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -214,7 +216,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *
@@ -230,7 +232,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     }
 
     /**
-     * {@inheritdoc}
+     * {@inheritDoc}
      *
      * @api
      *

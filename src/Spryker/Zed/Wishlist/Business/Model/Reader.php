@@ -28,6 +28,8 @@ use Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface;
 
 class Reader implements ReaderInterface
 {
+    protected const ERROR_MESSAGE_WISHLIST_NOT_FOUND = 'wishlist.not.found';
+
     /**
      * @var \Spryker\Zed\Wishlist\Persistence\WishlistQueryContainerInterface
      */
@@ -409,6 +411,28 @@ class Reader implements ReaderInterface
             ->getIdCustomer();
 
         return $this->getCollectionByIdCustomer($idCustomer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
+    {
+        $wishlistFilterTransfer->requireIdCustomer();
+
+        $wishlistTransfer = $this->wishlistRepository->findWishlistByFilter($wishlistFilterTransfer);
+
+        if (!$wishlistTransfer) {
+            return (new WishlistResponseTransfer())
+                ->setIsSuccess(false)
+                ->addError(static::ERROR_MESSAGE_WISHLIST_NOT_FOUND);
+        }
+
+        return (new WishlistResponseTransfer())
+            ->setWishlist($wishlistTransfer)
+            ->setIsSuccess(true);
     }
 
     /**
