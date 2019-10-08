@@ -166,6 +166,8 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      *
      * @api
      *
+     * @deprecated Use WishlistClient::getWishlistByFilter() instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -252,5 +254,19 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
             $this->getFactory()->createCartClient(),
             $this
         );
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
+    {
+        return $this->getZedStub()->getWishlistByFilter($wishlistFilterTransfer);
     }
 }

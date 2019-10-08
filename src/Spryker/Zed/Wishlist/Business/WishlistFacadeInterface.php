@@ -182,6 +182,8 @@ interface WishlistFacadeInterface
      *
      * @api
      *
+     * @deprecated Use WishlistFacade::getWishlistByFilter() instead.
+     *
      * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
      *
      * @return \Generated\Shared\Transfer\WishlistTransfer
@@ -217,4 +219,18 @@ interface WishlistFacadeInterface
      * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
+
+    /**
+     * Specification:
+     * - Returns wishlist for a given WishlistFilterTransfer.
+     * - Required value is WishlistFilterTransfer.idCustomer.
+     * - Returns WishlistResponseTransfer.isSuccess true on success and false otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
+     */
+    public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
 }

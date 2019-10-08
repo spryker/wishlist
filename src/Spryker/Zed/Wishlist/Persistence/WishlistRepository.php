@@ -25,19 +25,47 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
      */
     public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
-        $wishlistCollection = new WishlistCollectionTransfer();
-
         $wishlistEntities = $this->getFactory()->createWishlistQuery()
             ->useSpyCustomerQuery()
                 ->filterByCustomerReference($customerReference)
             ->endUse()
+            ->leftJoinWithSpyWishlistItem()
             ->useSpyWishlistItemQuery(null, Criteria::LEFT_JOIN)
                 ->withColumn(
                     sprintf('COUNT(%s)', SpyWishlistItemTableMap::COL_ID_WISHLIST_ITEM),
                     WishlistTransfer::NUMBER_OF_ITEMS
                 )
-                ->groupByFkWishlist()
             ->endUse()
+            ->groupByIdWishlist()
+            ->find();
+
+        if (!$wishlistEntities->count()) {
+            return new WishlistCollectionTransfer();
+        }
+
+        return $this->getFactory()->createWishlistMapper()
+            ->mapWishlistEntitiesToWishlistCollectionTransfer($wishlistEntities, new WishlistCollectionTransfer());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistTransfer|null
+     */
+    public function findWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): ?WishlistTransfer
+    {
+        $wishlistQuery = $this->getFactory()
+            ->createWishlistQuery()
+            ->leftJoinWithSpyWishlistItem()
+            ->useSpyWishlistItemQuery(null, Criteria::LEFT_JOIN)
+                ->withColumn(
+                    sprintf('COUNT(%s)', SpyWishlistItemTableMap::COL_ID_WISHLIST_ITEM),
+                    WishlistTransfer::NUMBER_OF_ITEMS
+                )
+            ->endUse()
+            ->groupByIdWishlist();
+
+        $wishlistEntityCollection = $this->applyFilters($wishlistQuery, $wishlistFilterTransfer)
             ->find();
 
         foreach ($wishlistEntities as $wishlistEntity) {

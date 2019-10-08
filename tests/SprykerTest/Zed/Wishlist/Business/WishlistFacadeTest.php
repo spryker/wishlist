@@ -37,9 +37,12 @@ use Spryker\Zed\Wishlist\Persistence\WishlistQueryContainer;
  * @group WishlistFacadeTest
  * Add your own group annotations below this line
  */
-class WishlistFacadeTest extends Unit
+class WishlistFacadeTest extends Test
 {
-    public const DEFAULT_NAME = 'default';
+    /**
+     * @var \SprykerTest\Zed\Wishlist\WishlistBusinessTester
+     */
+    protected $tester;
 
     /**
      * @var \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface
@@ -256,10 +259,10 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddNonExistingItemShouldSkipItem()
+    public function testAddNonExistingItemShouldSkipItem(): void
     {
         $WishlistItemTransfer = (new WishlistItemTransfer())
-            ->setWishlistName(self::DEFAULT_NAME)
+            ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku('non-existing-sku');
 
@@ -272,10 +275,10 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemShouldNotThrowExceptionWhenItemAlreadyExists()
+    public function testAddItemShouldNotThrowExceptionWhenItemAlreadyExists(): void
     {
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
-            ->setWishlistName(self::DEFAULT_NAME)
+            ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_1->getSku());
 
@@ -288,7 +291,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveItemShouldNotThrowExceptionWhenItemIsAlreadyRemoved()
+    public function testRemoveItemShouldNotThrowExceptionWhenItemIsAlreadyRemoved(): void
     {
         $this->wishlistQueryContainer
             ->queryItemsByWishlistId($this->wishlist->getIdWishlist())
@@ -309,7 +312,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveItemShouldNotThrowExceptionWhenListIsEmpty()
+    public function testRemoveItemShouldNotThrowExceptionWhenListIsEmpty(): void
     {
         $this->wishlistQueryContainer
             ->queryItemsByWishlistId($this->wishlist->getIdWishlist())
@@ -329,10 +332,10 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveItemShouldRemoveItem()
+    public function testRemoveItemShouldRemoveItem(): void
     {
         $wishlistItemUpdateRequestTransfer = (new WishlistItemTransfer())
-            ->setWishlistName(self::DEFAULT_NAME)
+            ->setWishlistName($this->wishlist->getName())
             ->setFkCustomer($this->customer->getIdCustomer())
             ->setSku($this->product_1->getSku());
 
@@ -345,7 +348,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testCreateWishlistShouldCreateWishlist()
+    public function testCreateWishlistShouldCreateWishlist(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
@@ -362,7 +365,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAndCreateWishlistShouldCreateWishlist()
+    public function testValidateAndCreateWishlistShouldCreateWishlist(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
@@ -382,7 +385,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAndCreateWishlistShouldFailWhenNameIsNotUnique()
+    public function testValidateAndCreateWishlistShouldFailWhenNameIsNotUnique(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
@@ -398,7 +401,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testUpdateWishlistShouldUpdateWishlist()
+    public function testUpdateWishlistShouldUpdateWishlist(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
@@ -418,7 +421,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAndUpdateWishlistShouldUpdateWishlist()
+    public function testValidateAndUpdateWishlistShouldUpdateWishlist(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
@@ -441,7 +444,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testValidateAndUpdateWishlistShouldFailWhenNameIsNotUnique()
+    public function testValidateAndUpdateWishlistShouldFailWhenNameIsNotUnique(): void
     {
         $wishlistTransfer = new WishlistTransfer();
 
@@ -461,7 +464,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveWishlistShouldRemoveItemsAsWell()
+    public function testRemoveWishlistShouldRemoveItemsAsWell(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
@@ -478,7 +481,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveWishlistByNameShouldRemoveItemsAsWell()
+    public function testRemoveWishlistByNameShouldRemoveItemsAsWell(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer
@@ -494,7 +497,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testEmptyWishlistShouldRemoveItems()
+    public function testEmptyWishlistShouldRemoveItems(): void
     {
         $wishlistTransfer = new WishlistTransfer();
         $wishlistTransfer->fromArray(
@@ -511,7 +514,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testAddItemCollectionShouldAddItemCollection()
+    public function testAddItemCollectionShouldAddItemCollection(): void
     {
         $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($this->wishlist->toArray(), true);
@@ -536,7 +539,7 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testRemoveItemCollectionShouldRemoveOnlySelectedItems()
+    public function testRemoveItemCollectionShouldRemoveOnlySelectedItems(): void
     {
         $wishlistTransfer = (new WishlistTransfer())
             ->fromArray($this->wishlist->toArray(), true);
@@ -570,9 +573,9 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetWishlistOverviewShouldReturnPaginatedResult()
+    public function testGetWishlistOverviewShouldReturnPaginatedResult(): void
     {
-        $this->setupBigWishlist();
+        $this->addItemsToWishlist();
 
         $pageNumber = 3;
         $itemsPerPage = 10;
@@ -605,13 +608,10 @@ class WishlistFacadeTest extends Unit
     /**
      * @return void
      */
-    public function testGetWishlistsByCustomerReturnPersistedWishlists()
+    public function testGetWishlistsByCustomerReturnPersistedWishlists(): void
     {
-        $this->setupWishlist('test-wishlist-1');
-        $this->setupWishlist('test-wishlist-2');
-
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->fromArray($this->customer->toArray(), true);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
+        $this->tester->haveWishlist([WishlistTransfer::FK_CUSTOMER => $this->customer->getIdCustomer()]);
 
         $wishlistCollectionTransfer = $this->wishlistFacade->getCustomerWishlistCollection($customerTransfer);
 

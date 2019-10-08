@@ -6,6 +6,7 @@
     <transfer name="Wishlist">
         <property name="idWishlist" type="int" />
         <property name="fkCustomer" type="int" />
+        <property name="wishlistItems" type="WishlistItem[]" singular="wishlistItem"/>
         <property name="name" type="string" />
         <property name="numberOfItems" type="int" />
         <property name="createdAt" type="string" />
