@@ -10,6 +10,7 @@ namespace Spryker\Zed\Wishlist\Business;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
 use Generated\Shared\Transfer\WishlistResponseTransfer;
@@ -261,5 +262,21 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
         return $this->getFactory()
             ->createReader()
             ->getWishlistByFilter($wishlistFilterTransfer);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
+    {
+        return $this->getFactory()
+            ->createWishlistItemWriter()
+            ->updateWishlistItem($wishlistItemTransfer);
     }
 }

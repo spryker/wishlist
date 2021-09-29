@@ -66,6 +66,23 @@ class WishlistMapper implements WishlistMapperInterface
         SpyWishlistItem $wishlistItemEntity,
         WishlistItemTransfer $wishlistItemTransfer
     ): WishlistItemTransfer {
-        return $wishlistItemTransfer->fromArray($wishlistItemEntity->toArray(), true);
+        return $wishlistItemTransfer
+            ->fromArray($wishlistItemEntity->toArray(), true)
+            ->setWishlistName($wishlistItemEntity->getSpyWishlist()->getName());
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem
+     */
+    public function mapWishlistItemTransferToWishlistItemEntity(
+        WishlistItemTransfer $wishlistItemTransfer,
+        SpyWishlistItem $wishlistItemEntity
+    ): SpyWishlistItem {
+        $wishlistItemEntity->fromArray($wishlistItemTransfer->toArray());
+
+        return $wishlistItemEntity;
     }
 }

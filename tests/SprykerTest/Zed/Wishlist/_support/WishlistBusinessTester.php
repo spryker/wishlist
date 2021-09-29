@@ -8,6 +8,8 @@
 namespace SprykerTest\Zed\Wishlist;
 
 use Codeception\Actor;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 
 /**
  * Inherited Methods
@@ -22,6 +24,7 @@ use Codeception\Actor;
  * @method void lookForwardTo($achieveValue)
  * @method void comment($description)
  * @method \Codeception\Lib\Friend haveFriend($name, $actorClass = NULL)
+ * @method \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface getFacade()
  *
  * @SuppressWarnings(PHPMD)
  */
@@ -29,7 +32,18 @@ class WishlistBusinessTester extends Actor
 {
     use _generated\WishlistBusinessTesterActions;
 
-   /**
-    * Define custom actions here
-    */
+    /**
+     * @param int $idWishlistItem
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    public function getWishlistItemFromPersistence(int $idWishlistItem): WishlistItemTransfer
+    {
+        $wishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
+            ->setIdWishlistItem($idWishlistItem);
+
+        return $this->getFacade()
+            ->getWishlistItem($wishlistItemCriteriaTransfer)
+            ->getWishlistItemOrFail();
+    }
 }

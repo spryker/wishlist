@@ -113,4 +113,14 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="Message">
+        <property name="value" type="string"/>
+    </transfer>
+
+    <transfer name="WishlistItemResponse">
+        <property name="wishlistItem" type="WishlistItem"/>
+        <property name="isSuccess" type="bool"/>
+        <property name="messages" type="Message[]" singular="message"/>
+    </transfer>
+
 </transfers>

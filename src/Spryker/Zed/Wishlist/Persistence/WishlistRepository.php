@@ -9,8 +9,11 @@ namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
+use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
+use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Spryker\Zed\Kernel\Persistence\AbstractRepository;
@@ -80,6 +83,29 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
     }
 
     /**
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer|null
+     */
+    public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer
+    {
+        $wishlistItemQuery = $this->getFactory()
+            ->createWishlistItemQuery()
+            ->joinWithSpyWishlist();
+
+        $wishlistItemQuery = $this->applyWishlistItemFilters($wishlistItemCriteriaTransfer, $wishlistItemQuery);
+        $wishlistItemEntity = $wishlistItemQuery->findOne();
+
+        if (!$wishlistItemEntity) {
+            return null;
+        }
+
+        return $this->getFactory()
+            ->createWishlistMapper()
+            ->mapWishlistItemEntityToWishlistItemTransfer($wishlistItemEntity, new WishlistItemTransfer());
+    }
+
+    /**
      * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $wishlistQuery
      * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
      *
@@ -98,5 +124,28 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
         }
 
         return $wishlistQuery;
+    }
+
+    /**
+     * @phpstan-param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed> $wishlistItemQuery
+     *
+     * @phpstan-return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery<mixed>
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
+     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery $wishlistItemQuery
+     *
+     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery
+     */
+    protected function applyWishlistItemFilters(
+        WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer,
+        SpyWishlistItemQuery $wishlistItemQuery
+    ): SpyWishlistItemQuery {
+        if ($wishlistItemCriteriaTransfer->getIdWishlistItem()) {
+            /** @var int $idWishlistItem */
+            $idWishlistItem = $wishlistItemCriteriaTransfer->getIdWishlistItem();
+            $wishlistItemQuery->filterByIdWishlistItem($idWishlistItem);
+        }
+
+        return $wishlistItemQuery;
     }
 }

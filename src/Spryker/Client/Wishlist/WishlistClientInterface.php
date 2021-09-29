@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistCollectionTransfer;
 use Generated\Shared\Transfer\WishlistFilterTransfer;
 use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
+use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
 use Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer;
 use Generated\Shared\Transfer\WishlistOverviewRequestTransfer;
@@ -177,4 +178,20 @@ interface WishlistClientInterface
      * @return \Generated\Shared\Transfer\WishlistResponseTransfer
      */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
+
+    /**
+     * Specification:
+     * - Makes Zed request.
+     * - Expects `WishlistItemTransfer.idWishlistItem` or `WishlistItemTransfer.uuid` to be set.
+     * - Retrieves wishlist item by data provided in the `WishlistItemTransfer` from Persistence.
+     * - Updates existing wishlist item in database.
+     * - Returns `isSuccess=true` with updated wishlist item on success or `isSuccess=false` with error messages otherwise.
+     *
+     * @api
+     *
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
+     */
+    public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer;
 }
