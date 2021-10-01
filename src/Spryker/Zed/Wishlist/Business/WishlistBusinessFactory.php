@@ -11,8 +11,8 @@ use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 use Spryker\Zed\Wishlist\Business\Model\Reader;
 use Spryker\Zed\Wishlist\Business\Model\Writer;
 use Spryker\Zed\Wishlist\Business\Transfer\WishlistTransferMapper;
-use Spryker\Zed\Wishlist\Business\Writer\WishlistItemWriter;
-use Spryker\Zed\Wishlist\Business\Writer\WishlistItemWriterInterface;
+use Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdater;
+use Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdaterInterface;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
@@ -60,13 +60,15 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     }
 
     /**
-     * @return \Spryker\Zed\Wishlist\Business\Writer\WishlistItemWriterInterface
+     * @return \Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdaterInterface
      */
-    public function createWishlistItemWriter(): WishlistItemWriterInterface
+    public function createWishlistItemUpdater(): WishlistItemUpdaterInterface
     {
-        return new WishlistItemWriter(
+        return new WishlistItemUpdater(
             $this->getEntityManager(),
-            $this->getRepository()
+            $this->getRepository(),
+            $this->getProductFacade(),
+            $this->getAddItemPreCheckPlugins()
         );
     }
 

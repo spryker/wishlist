@@ -5,16 +5,18 @@
  * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
  */
 
-namespace Spryker\Zed\Wishlist\Business\Writer;
+namespace Spryker\Zed\Wishlist\Business\Updater;
 
 use Generated\Shared\Transfer\MessageTransfer;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemResponseTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface;
 use Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface;
 
-class WishlistItemWriter implements WishlistItemWriterInterface
+class WishlistItemUpdater implements WishlistItemUpdaterInterface
 {
     /**
      * @var string
@@ -37,15 +39,31 @@ class WishlistItemWriter implements WishlistItemWriterInterface
     protected $wishlistRepository;
 
     /**
+     * @var \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface
+     */
+    protected $productFacade;
+
+    /**
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface>
+     */
+    protected $addItemPreCheckPlugins;
+
+    /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface $wishlistEntityManager
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface $wishlistRepository
+     * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface $productFacade
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface> $addItemPreCheckPlugins
      */
     public function __construct(
         WishlistEntityManagerInterface $wishlistEntityManager,
-        WishlistRepositoryInterface $wishlistRepository
+        WishlistRepositoryInterface $wishlistRepository,
+        WishlistToProductInterface $productFacade,
+        array $addItemPreCheckPlugins
     ) {
         $this->wishlistEntityManager = $wishlistEntityManager;
         $this->wishlistRepository = $wishlistRepository;
+        $this->productFacade = $productFacade;
+        $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
     }
 
     /**
@@ -55,7 +73,11 @@ class WishlistItemWriter implements WishlistItemWriterInterface
      */
     public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
     {
-        if (!$wishlistItemTransfer->getIdWishlistItem()) {
+        if (!$wishlistItemTransfer->getIdWishlistItem() || !$this->isProductConcreteActive($wishlistItemTransfer)) {
+            return $this->getErrorResponse(static::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED);
+        }
+
+        if (!$this->executeAddItemPreCheckPlugins($wishlistItemTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED);
         }
 
@@ -72,6 +94,44 @@ class WishlistItemWriter implements WishlistItemWriterInterface
         return (new WishlistItemResponseTransfer())
             ->setIsSuccess(true)
             ->setWishlistItem($wishlistItemTransfer);
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return bool
+     */
+    protected function isProductConcreteActive(WishlistItemTransfer $wishlistItemTransfer): bool
+    {
+        $productConcreteTransfer = (new ProductConcreteTransfer())
+            ->setSku($wishlistItemTransfer->getSkuOrFail());
+
+        if (
+            !$this->productFacade->hasProductConcrete($wishlistItemTransfer->getSkuOrFail())
+            || !$this->productFacade->isProductConcreteActive($productConcreteTransfer)
+        ) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
+     * @return bool
+     */
+    protected function executeAddItemPreCheckPlugins(WishlistItemTransfer $wishlistItemTransfer): bool
+    {
+        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
+            $wishlistPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($wishlistItemTransfer);
+
+            if (!$wishlistPreAddItemCheckResponseTransfer->getIsSuccess()) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

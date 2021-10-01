@@ -8,8 +8,12 @@
 namespace SprykerTest\Zed\Wishlist\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
+use Spryker\Zed\Wishlist\WishlistDependencyProvider;
+use Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -25,24 +29,24 @@ use Generated\Shared\Transfer\WishlistTransfer;
 class UpdateWishlistItemFacadeTest extends Test
 {
     /**
-     * @var string
-     */
-    protected const FAKE_PRODUCT_CONFIGURATION = 'FAKE_PRODUCT_CONFIGURATION';
-
-    /**
      * @var int
      */
-    protected const FAKE_ID_WISHLIST_ITEN = 88888;
+    protected const FAKE_ID_WISHLIST_ITEM = 88888;
 
     /**
-     * @see \Spryker\Zed\Wishlist\Business\Writer\WishlistItemWriter::GLOSSARY_KEY_WISHLIST_ITEM_NOT_FOUND
+     * @var string
+     */
+    protected const FAKE_SKU = 'FAKE_SKU';
+
+    /**
+     * @see \Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdater::GLOSSARY_KEY_WISHLIST_ITEM_NOT_FOUND
      *
      * @var string
      */
     protected const GLOSSARY_KEY_WISHLIST_ITEM_NOT_FOUND = 'wishlist.validation.error.wishlist_item_not_found';
 
     /**
-     * @see \Spryker\Zed\Wishlist\Business\Writer\WishlistItemWriter::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED
+     * @see \Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdater::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED
      *
      * @var string
      */
@@ -90,10 +94,11 @@ class UpdateWishlistItemFacadeTest extends Test
     {
         // Arrange
         $wishlistItemTransfer = $this->createDefaultWishlistItem();
+        $newProductConcrete = $this->tester->haveProduct();
 
         $wishlistItemTransfer = (new WishlistItemTransfer())
             ->setIdWishlistItem($wishlistItemTransfer->getIdWishlistItem())
-            ->setProductConfigurationInstanceData(static::FAKE_PRODUCT_CONFIGURATION);
+            ->setSku($newProductConcrete->getSku());
 
         // Act
         $wishlistItemResponseTransfer = $this->tester
@@ -103,34 +108,9 @@ class UpdateWishlistItemFacadeTest extends Test
         // Assert
         $this->assertTrue($wishlistItemResponseTransfer->getIsSuccess());
         $this->assertSame(
-            static::FAKE_PRODUCT_CONFIGURATION,
-            $this->tester->getWishlistItemFromPersistence($wishlistItemTransfer->getIdWishlistItem())->getProductConfigurationInstanceData(),
+            $newProductConcrete->getSku(),
+            $this->tester->getWishlistItemFromPersistence($wishlistItemTransfer->getIdWishlistItem())->getSku(),
             'Wishlist item property was not updated in database storage.'
-        );
-    }
-
-    /**
-     * @return void
-     */
-    public function testUpdateWishlistItemByUuidEnsureThatWishlistItemPropertyWasUpdated(): void
-    {
-        // Arrange
-        $wishlistItemTransfer = $this->createDefaultWishlistItem();
-
-        $wishlistItemTransfer = (new WishlistItemTransfer())
-            ->setIdWishlistItem($wishlistItemTransfer->getIdWishlistItem())
-            ->setProductConfigurationInstanceData(static::FAKE_PRODUCT_CONFIGURATION);
-
-        // Act
-        $wishlistItemResponseTransfer = $this->tester
-            ->getFacade()
-            ->updateWishlistItem($wishlistItemTransfer);
-
-        // Assert
-        $this->assertSame(
-            static::FAKE_PRODUCT_CONFIGURATION,
-            $wishlistItemResponseTransfer->getWishlistItemOrFail()->getProductConfigurationInstanceData(),
-            'Wishlist item property was not updated in result transfer.'
         );
     }
 
@@ -141,7 +121,8 @@ class UpdateWishlistItemFacadeTest extends Test
     {
         // Arrange
         $wishlistItemTransfer = (new WishlistItemTransfer())
-            ->setIdWishlistItem(static::FAKE_ID_WISHLIST_ITEN);
+            ->setSku($this->productConcreteTransfer->getSku())
+            ->setIdWishlistItem(static::FAKE_ID_WISHLIST_ITEM);
 
         // Act
         $wishlistItemResponseTransfer = $this->tester
@@ -179,6 +160,96 @@ class UpdateWishlistItemFacadeTest extends Test
     }
 
     /**
+     * @return void
+     */
+    public function testUpdateWishlistItemEnsureThatNewProductIsExists(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = $this->createDefaultWishlistItem();
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setIdWishlistItem($wishlistItemTransfer->getIdWishlistItem())
+            ->setSku(static::FAKE_SKU);
+
+        // Act
+        $wishlistItemResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateWishlistItem($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
+        $this->assertSame(
+            static::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED,
+            $wishlistItemResponseTransfer->getMessages()->offsetGet(0)->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateWishlistItemEnsureThatNewProductIsActive(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = $this->createDefaultWishlistItem();
+        $newProductConcrete = $this->tester->haveProduct([ProductConcreteTransfer::IS_ACTIVE => false]);
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setIdWishlistItem($wishlistItemTransfer->getIdWishlistItem())
+            ->setSku($newProductConcrete->getSku());
+
+        // Act
+        $wishlistItemResponseTransfer = $this->tester
+            ->getFacade()
+            ->updateWishlistItem($wishlistItemTransfer);
+
+        // Assert
+        $this->assertFalse($wishlistItemResponseTransfer->getIsSuccess());
+        $this->assertSame(
+            static::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED,
+            $wishlistItemResponseTransfer->getMessages()->offsetGet(0)->getValue()
+        );
+    }
+
+    /**
+     * @return void
+     */
+    public function testUpdateWishlistItemEnsureThatAddItemPreCheckPluginStackExecuted(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = $this->createDefaultWishlistItem();
+        $newProductConcrete = $this->tester->haveProduct();
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setIdWishlistItem($wishlistItemTransfer->getIdWishlistItem())
+            ->setSku($newProductConcrete->getSku());
+
+        // Assert
+        $this->tester->setDependency(WishlistDependencyProvider::PLUGINS_ADD_ITEM_PRE_CHECK, [
+            $this->getAddItemPreCheckPluginMock(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateWishlistItem($wishlistItemTransfer);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface
+     */
+    protected function getAddItemPreCheckPluginMock(): AddItemPreCheckPluginInterface
+    {
+        $addItemPreCheckPluginMock = $this
+            ->getMockBuilder(AddItemPreCheckPluginInterface::class)
+            ->getMock();
+
+        $addItemPreCheckPluginMock
+            ->expects($this->once())
+            ->method('check')
+            ->willReturn((new WishlistPreAddItemCheckResponseTransfer())->setIsSuccess(true));
+
+        return $addItemPreCheckPluginMock;
+    }
+
+    /**
      * @return \Generated\Shared\Transfer\WishlistItemTransfer
      */
     protected function createDefaultWishlistItem(): WishlistItemTransfer
@@ -187,7 +258,6 @@ class UpdateWishlistItemFacadeTest extends Test
             WishlistItemTransfer::FK_WISHLIST => $this->wishlistTransfer->getIdWishlist(),
             WishlistItemTransfer::SKU => $this->productConcreteTransfer->getSku(),
             WishlistItemTransfer::FK_CUSTOMER => $this->customerTransfer->getIdCustomer(),
-            WishlistItemTransfer::PRODUCT_CONFIGURATION_INSTANCE_DATA => '',
         ]);
     }
 }

@@ -239,7 +239,9 @@ interface WishlistFacadeInterface
 
     /**
      * Specification:
-     * - Expects `WishlistItemTransfer.idWishlistItem` or `WishlistItemTransfer.uuid` to be set.
+     * - Expects `WishlistItemTransfer.idWishlistItem` to be set.
+     * - Expects `WishlistItemTransfer.sku` to be set.
+     * - Executes `AddItemPreCheckPluginInterface` plugin stack.
      * - Retrieves wishlist item by data provided in the `WishlistItemTransfer` from Persistence.
      * - Updates existing wishlist item in database.
      * - Returns `isSuccess=true` with updated wishlist item on success or `isSuccess=false` with error messages otherwise.

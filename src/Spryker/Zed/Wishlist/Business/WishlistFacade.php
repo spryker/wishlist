@@ -276,7 +276,7 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
     public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
     {
         return $this->getFactory()
-            ->createWishlistItemWriter()
+            ->createWishlistItemUpdater()
             ->updateWishlistItem($wishlistItemTransfer);
     }
 }
