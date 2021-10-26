@@ -44,26 +44,34 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
     protected $productFacade;
 
     /**
-     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface>
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface>
      */
-    protected $addItemPreCheckPlugins;
+    protected $updateItemPreCheckPlugins;
+
+    /**
+     * @var array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginInterface>
+     */
+    protected $wishlistPreUpdateItemPlugins;
 
     /**
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface $wishlistEntityManager
      * @param \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface $wishlistRepository
      * @param \Spryker\Zed\Wishlist\Dependency\Facade\WishlistToProductInterface $productFacade
-     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface> $addItemPreCheckPlugins
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface> $updateItemPreCheckPlugins
+     * @param array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginInterface> $wishlistPreUpdateItemPlugins
      */
     public function __construct(
         WishlistEntityManagerInterface $wishlistEntityManager,
         WishlistRepositoryInterface $wishlistRepository,
         WishlistToProductInterface $productFacade,
-        array $addItemPreCheckPlugins
+        array $updateItemPreCheckPlugins,
+        array $wishlistPreUpdateItemPlugins
     ) {
         $this->wishlistEntityManager = $wishlistEntityManager;
         $this->wishlistRepository = $wishlistRepository;
         $this->productFacade = $productFacade;
-        $this->addItemPreCheckPlugins = $addItemPreCheckPlugins;
+        $this->updateItemPreCheckPlugins = $updateItemPreCheckPlugins;
+        $this->wishlistPreUpdateItemPlugins = $wishlistPreUpdateItemPlugins;
     }
 
     /**
@@ -77,7 +85,7 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
             return $this->getErrorResponse(static::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED);
         }
 
-        if (!$this->executeAddItemPreCheckPlugins($wishlistItemTransfer)) {
+        if (!$this->executeUpdateItemPreCheckPlugins($wishlistItemTransfer)) {
             return $this->getErrorResponse(static::GLOSSARY_KEY_WISHLIST_ITEM_CANNOT_BE_UPDATED);
         }
 
@@ -89,6 +97,8 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
         }
 
         $persistedWishlistItem->fromArray($wishlistItemTransfer->modifiedToArray());
+
+        $persistedWishlistItem = $this->executeWishlistPreUpdateItemPlugins($persistedWishlistItem);
         $wishlistItemTransfer = $this->wishlistEntityManager->updateWishlistItem($persistedWishlistItem);
 
         return (new WishlistItemResponseTransfer())
@@ -119,14 +129,28 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
     /**
      * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
      *
+     * @return \Generated\Shared\Transfer\WishlistItemTransfer
+     */
+    protected function executeWishlistPreUpdateItemPlugins(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
+    {
+        foreach ($this->wishlistPreUpdateItemPlugins as $wishlistPreUpdateItemPlugin) {
+            $wishlistItemTransfer = $wishlistPreUpdateItemPlugin->preUpdateItem($wishlistItemTransfer);
+        }
+
+        return $wishlistItemTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
+     *
      * @return bool
      */
-    protected function executeAddItemPreCheckPlugins(WishlistItemTransfer $wishlistItemTransfer): bool
+    protected function executeUpdateItemPreCheckPlugins(WishlistItemTransfer $wishlistItemTransfer): bool
     {
-        foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
-            $wishlistPreAddItemCheckResponseTransfer = $preAddItemCheckPlugin->check($wishlistItemTransfer);
+        foreach ($this->updateItemPreCheckPlugins as $updateItemPreCheckPlugin) {
+            $wishlistPreUpdateItemCheckResponseTransfer = $updateItemPreCheckPlugin->check($wishlistItemTransfer);
 
-            if (!$wishlistPreAddItemCheckResponseTransfer->getIsSuccess()) {
+            if (!$wishlistPreUpdateItemCheckResponseTransfer->getIsSuccess()) {
                 return false;
             }
         }

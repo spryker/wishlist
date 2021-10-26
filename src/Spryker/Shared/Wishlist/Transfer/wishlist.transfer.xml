@@ -113,6 +113,10 @@
         <property name="isSuccess" type="bool"/>
     </transfer>
 
+    <transfer name="WishlistPreUpdateItemCheckResponse">
+        <property name="isSuccess" type="bool"/>
+    </transfer>
+
     <transfer name="Message">
         <property name="value" type="string"/>
     </transfer>

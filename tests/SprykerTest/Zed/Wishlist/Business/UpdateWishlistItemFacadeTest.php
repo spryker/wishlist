@@ -10,10 +10,11 @@ namespace SprykerTest\Zed\Wishlist\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\ProductConcreteTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
-use Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer;
+use Generated\Shared\Transfer\WishlistPreUpdateItemCheckResponseTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Spryker\Zed\Wishlist\WishlistDependencyProvider;
-use Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface;
+use Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface;
+use Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginInterface;
 
 /**
  * Auto-generated group annotations
@@ -213,7 +214,7 @@ class UpdateWishlistItemFacadeTest extends Test
     /**
      * @return void
      */
-    public function testUpdateWishlistItemEnsureThatAddItemPreCheckPluginStackExecuted(): void
+    public function testUpdateWishlistItemEnsureThatUpdateItemPreCheckPluginStackExecuted(): void
     {
         // Arrange
         $wishlistItemTransfer = $this->createDefaultWishlistItem();
@@ -224,8 +225,8 @@ class UpdateWishlistItemFacadeTest extends Test
             ->setSku($newProductConcrete->getSku());
 
         // Assert
-        $this->tester->setDependency(WishlistDependencyProvider::PLUGINS_ADD_ITEM_PRE_CHECK, [
-            $this->getAddItemPreCheckPluginMock(),
+        $this->tester->setDependency(WishlistDependencyProvider::PLUGINS_UPDATE_ITEM_PRE_CHECK, [
+            $this->getUpdateItemPreCheckPluginMock(),
         ]);
 
         // Act
@@ -233,20 +234,61 @@ class UpdateWishlistItemFacadeTest extends Test
     }
 
     /**
-     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\WishlistExtension\Dependency\Plugin\AddItemPreCheckPluginInterface
+     * @return void
      */
-    protected function getAddItemPreCheckPluginMock(): AddItemPreCheckPluginInterface
+    public function testUpdateWishlistItemEnsureThatWishlistPreUpdateItemPluginStackExecuted(): void
     {
-        $addItemPreCheckPluginMock = $this
-            ->getMockBuilder(AddItemPreCheckPluginInterface::class)
+        // Arrange
+        $wishlistItemTransfer = $this->createDefaultWishlistItem();
+        $newProductConcrete = $this->tester->haveProduct();
+
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setIdWishlistItem($wishlistItemTransfer->getIdWishlistItem())
+            ->setSku($newProductConcrete->getSku());
+
+        // Assert
+        $this->tester->setDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_PRE_UPDATE_ITEM, [
+            $this->getWishlistPreUpdateItemPluginMock(),
+        ]);
+
+        // Act
+        $this->tester->getFacade()->updateWishlistItem($wishlistItemTransfer);
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface
+     */
+    protected function getUpdateItemPreCheckPluginMock(): UpdateItemPreCheckPluginInterface
+    {
+        $updateItemPreCheckPluginMock = $this
+            ->getMockBuilder(UpdateItemPreCheckPluginInterface::class)
             ->getMock();
 
-        $addItemPreCheckPluginMock
+        $updateItemPreCheckPluginMock
             ->expects($this->once())
             ->method('check')
-            ->willReturn((new WishlistPreAddItemCheckResponseTransfer())->setIsSuccess(true));
+            ->willReturn((new WishlistPreUpdateItemCheckResponseTransfer())->setIsSuccess(true));
 
-        return $addItemPreCheckPluginMock;
+        return $updateItemPreCheckPluginMock;
+    }
+
+    /**
+     * @return \PHPUnit\Framework\MockObject\MockObject|\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginInterface
+     */
+    protected function getWishlistPreUpdateItemPluginMock(): WishlistPreUpdateItemPluginInterface
+    {
+        $wishlistPreUpdateItemPluginMock = $this
+            ->getMockBuilder(WishlistPreUpdateItemPluginInterface::class)
+            ->getMock();
+
+        $wishlistPreUpdateItemPluginMock
+            ->expects($this->once())
+            ->method('preUpdateItem')
+            ->willReturnCallback(function (WishlistItemTransfer $wishlistItemTransfer) {
+                return $wishlistItemTransfer;
+            });
+
+        return $wishlistPreUpdateItemPluginMock;
     }
 
     /**

@@ -184,8 +184,9 @@ interface WishlistClientInterface
      * - Makes Zed request.
      * - Expects `WishlistItemTransfer.idWishlistItem` to be set.
      * - Expects `WishlistItemTransfer.sku` to be set.
-     * - Executes `AddItemPreCheckPluginInterface` plugin stack.
+     * - Executes `UpdateItemPreCheckPluginInterface` plugin stack.
      * - Retrieves wishlist item by data provided in the `WishlistItemTransfer` from Persistence.
+     * - Executes `WishlistPreUpdateItemPluginInterface` plugin stack.
      * - Updates existing wishlist item in database.
      * - Returns `isSuccess=true` with updated wishlist item on success or `isSuccess=false` with error messages otherwise.
      *

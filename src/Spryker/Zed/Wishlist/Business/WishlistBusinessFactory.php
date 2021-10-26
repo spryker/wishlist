@@ -68,7 +68,8 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
             $this->getEntityManager(),
             $this->getRepository(),
             $this->getProductFacade(),
-            $this->getAddItemPreCheckPlugins()
+            $this->getUpdateItemPreCheckPlugins(),
+            $this->getWishlistPreUpdateItemPlugins()
         );
     }
 
@@ -102,5 +103,21 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
     public function getAddItemPreCheckPlugins(): array
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_ADD_ITEM_PRE_CHECK);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\UpdateItemPreCheckPluginInterface>
+     */
+    public function getUpdateItemPreCheckPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_UPDATE_ITEM_PRE_CHECK);
+    }
+
+    /**
+     * @return array<\Spryker\Zed\WishlistExtension\Dependency\Plugin\WishlistPreUpdateItemPluginInterface>
+     */
+    public function getWishlistPreUpdateItemPlugins(): array
+    {
+        return $this->getProvidedDependency(WishlistDependencyProvider::PLUGINS_WISHLIST_PRE_UPDATE_ITEM);
     }
 }
