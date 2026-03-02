@@ -55,9 +55,6 @@ class GetWishlistItemFacadeTest extends Unit
      */
     protected $productConcreteTransfer;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -71,9 +68,6 @@ class GetWishlistItemFacadeTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function testGetWishlistItemFromPersistenceByIdWishlistItem(): void
     {
         // Arrange
@@ -95,9 +89,6 @@ class GetWishlistItemFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetWishlistItemWithFakeIdWishlistItem(): void
     {
         // Arrange
@@ -114,9 +105,6 @@ class GetWishlistItemFacadeTest extends Unit
         $this->assertNull($wishlistItemResponseTransfer->getWishlistItem());
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     protected function createDefaultWishlistItem(): WishlistItemTransfer
     {
         return $this->tester->haveItemInWishlist([

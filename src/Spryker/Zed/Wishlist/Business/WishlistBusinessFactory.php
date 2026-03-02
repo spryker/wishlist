@@ -68,9 +68,6 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Wishlist\Business\Deleter\WishlistDeleterInterface
-     */
     public function createDeleter(): WishlistDeleterInterface
     {
         return new WishlistDeleter(
@@ -78,9 +75,6 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Wishlist\Business\Updater\WishlistItemUpdaterInterface
-     */
     public function createWishlistItemUpdater(): WishlistItemUpdaterInterface
     {
         return new WishlistItemUpdater(
@@ -92,9 +86,6 @@ class WishlistBusinessFactory extends AbstractBusinessFactory
         );
     }
 
-    /**
-     * @return \Spryker\Zed\Wishlist\Business\Validator\WishlistItemValidatorInterface
-     */
     public function createWishlistItemValidator(): WishlistItemValidatorInterface
     {
         return new WishlistItemValidator($this->getRepository());

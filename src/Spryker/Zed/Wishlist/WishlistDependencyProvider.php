@@ -88,11 +88,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductFacade(Container $container): Container
     {
         $container->set(static::FACADE_PRODUCT, function (Container $container) {
@@ -102,11 +97,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addProductQueryContainer(Container $container): Container
     {
         $container->set(static::QUERY_CONTAINER_PRODUCT, function (Container $container) {
@@ -116,11 +106,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addItemExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_ITEM_EXPANDER, function () {
@@ -130,11 +115,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addAddItemPreCheckPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_ADD_ITEM_PRE_CHECK, function () {
@@ -144,11 +124,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addUpdateItemPreCheckPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_UPDATE_ITEM_PRE_CHECK, function () {
@@ -158,11 +133,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addWishlistReloadItemPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_WISHLIST_RELOAD_ITEMS, function () {
@@ -172,11 +142,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addWishlistItemsValidatorPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_WISHLIST_ITEMS_VALIDATOR, function () {
@@ -186,11 +151,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addWishlistPreAddItemPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_WISHLIST_PRE_ADD_ITEM, function () {
@@ -200,11 +160,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addWishlistPreUpdateItemPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_WISHLIST_PRE_UPDATE_ITEM, function () {
@@ -214,11 +169,6 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-    /**
-     * @param \Spryker\Zed\Kernel\Container $container
-     *
-     * @return \Spryker\Zed\Kernel\Container
-     */
     protected function addWishlistItemExpanderPlugins(Container $container): Container
     {
         $container->set(static::PLUGINS_WISHLIST_ITEM_EXPANDER, function () {

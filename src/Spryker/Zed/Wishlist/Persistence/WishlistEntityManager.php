@@ -19,11 +19,6 @@ use Spryker\Zed\Wishlist\Business\Exception\MissingWishlistItemException;
  */
 class WishlistEntityManager extends AbstractEntityManager implements WishlistEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
         $wishlistItemTransfer->requireSku()
@@ -56,11 +51,6 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
             ->mapWishlistItemEntityToWishlistItemTransfer($wishlistItemEntity, $wishlistItemTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
         $wishlistItemQuery = $this->getFactory()
@@ -72,11 +62,6 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
         return $wishlistItemTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
         $wishlistItemEntity = $this->getFactory()

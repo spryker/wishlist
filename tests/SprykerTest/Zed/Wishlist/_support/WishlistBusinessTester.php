@@ -33,11 +33,6 @@ class WishlistBusinessTester extends Actor
 {
     use _generated\WishlistBusinessTesterActions;
 
-    /**
-     * @param int $idWishlistItem
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function getWishlistItemFromPersistence(int $idWishlistItem): WishlistItemTransfer
     {
         $wishlistItemCriteriaTransfer = (new WishlistItemCriteriaTransfer())
@@ -48,11 +43,6 @@ class WishlistBusinessTester extends Actor
             ->getWishlistItemOrFail();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|null
-     */
     public function findWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): ?WishlistTransfer
     {
         $wishlistQuery = SpyWishlistQuery::create();

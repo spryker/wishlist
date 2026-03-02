@@ -24,10 +24,6 @@ class ProductStorage implements ProductStorageInterface
      */
     protected $priceProductClient;
 
-    /**
-     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToProductInterface $productClient
-     * @param \Spryker\Client\Wishlist\Dependency\Client\WishlistToPriceProductClientInterface $priceProductClient
-     */
     public function __construct(
         WishlistToProductInterface $productClient,
         WishlistToPriceProductClientInterface $priceProductClient

@@ -25,10 +25,5 @@ interface WishlistToProductInterface
      */
     public function hasProductConcrete($sku);
 
-    /**
-     * @param \Generated\Shared\Transfer\ProductConcreteTransfer $productConcreteTransfer
-     *
-     * @return bool
-     */
     public function isProductConcreteActive(ProductConcreteTransfer $productConcreteTransfer): bool;
 }

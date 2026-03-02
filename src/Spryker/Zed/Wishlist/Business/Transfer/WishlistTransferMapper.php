@@ -92,12 +92,6 @@ class WishlistTransferMapper implements WishlistTransferMapperInterface
         return $transferCollection;
     }
 
-    /**
-     * @param \Orm\Zed\Product\Persistence\SpyProduct $productEntity
-     * @param \Generated\Shared\Transfer\WishlistItemMetaTransfer $wishlistItemMetaTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemMetaTransfer
-     */
     public function mapProductEntityToWishlistItemMetaTransfer(
         SpyProduct $productEntity,
         WishlistItemMetaTransfer $wishlistItemMetaTransfer

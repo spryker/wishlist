@@ -74,11 +74,6 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
         $this->wishlistPreUpdateItemPlugins = $wishlistPreUpdateItemPlugins;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
     public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
     {
         if (!$wishlistItemTransfer->getIdWishlistItem() || !$this->isProductConcreteActive($wishlistItemTransfer)) {
@@ -106,11 +101,6 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
             ->setWishlistItem($wishlistItemTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return bool
-     */
     protected function isProductConcreteActive(WishlistItemTransfer $wishlistItemTransfer): bool
     {
         $productConcreteTransfer = (new ProductConcreteTransfer())
@@ -126,11 +116,6 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
         return true;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     protected function executeWishlistPreUpdateItemPlugins(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
         foreach ($this->wishlistPreUpdateItemPlugins as $wishlistPreUpdateItemPlugin) {
@@ -140,11 +125,6 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
         return $wishlistItemTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return bool
-     */
     protected function executeUpdateItemPreCheckPlugins(WishlistItemTransfer $wishlistItemTransfer): bool
     {
         foreach ($this->updateItemPreCheckPlugins as $updateItemPreCheckPlugin) {
@@ -158,22 +138,12 @@ class WishlistItemUpdater implements WishlistItemUpdaterInterface
         return true;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemCriteriaTransfer
-     */
     protected function createWishlistItemCriteria(WishlistItemTransfer $wishlistItemTransfer): WishlistItemCriteriaTransfer
     {
         return (new WishlistItemCriteriaTransfer())
             ->setIdWishlistItem($wishlistItemTransfer->getIdWishlistItem());
     }
 
-    /**
-     * @param string $message
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
     protected function getErrorResponse(string $message): WishlistItemResponseTransfer
     {
         $messageTransfer = (new MessageTransfer())

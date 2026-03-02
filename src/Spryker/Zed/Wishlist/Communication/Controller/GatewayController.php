@@ -150,31 +150,16 @@ class GatewayController extends AbstractGatewayController
         return $this->getFacade()->getCustomerWishlistCollection($customerTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
     public function getWishlistByFilterAction(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         return $this->getFacade()->getWishlistByFilter($wishlistFilterTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
     public function getWishlistItemAction(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer
     {
         return $this->getFacade()->getWishlistItem($wishlistItemCriteriaTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
     public function updateWishlistItemAction(WishlistItemTransfer $wishlistItemTransfer): WishlistItemResponseTransfer
     {
         return $this->getFacade()->updateWishlistItem($wishlistItemTransfer);

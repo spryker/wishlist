@@ -20,19 +20,11 @@ class WishlistDeleter implements WishlistDeleterInterface
      */
     protected $wishlistEntityManager;
 
-    /**
-     * @param \Spryker\Zed\Wishlist\Persistence\WishlistEntityManagerInterface $wishlistEntityManager
-     */
     public function __construct(WishlistEntityManagerInterface $wishlistEntityManager)
     {
         $this->wishlistEntityManager = $wishlistEntityManager;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
-     */
     public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer): WishlistItemCollectionTransfer
     {
         $this->handleDatabaseTransaction(function () use ($wishlistItemTransferCollectionTransfer) {
@@ -42,11 +34,6 @@ class WishlistDeleter implements WishlistDeleterInterface
         return $wishlistItemTransferCollectionTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer
-     *
-     * @return void
-     */
     protected function executeDeleteItemCollectionTransaction(WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer): void
     {
         foreach ($wishlistItemTransferCollectionTransfer->getItems() as $wishlistItemTransfer) {

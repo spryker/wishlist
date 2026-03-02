@@ -100,9 +100,6 @@ class WishlistFacadeTest extends Unit
      */
     protected $wishlistItem_2;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -130,9 +127,6 @@ class WishlistFacadeTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     protected function addItemsToWishlist(): void
     {
         for ($i = 0; $i < 25; $i++) {
@@ -145,9 +139,6 @@ class WishlistFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testGetWishListByName(): void
     {
         // Arrange
@@ -163,9 +154,6 @@ class WishlistFacadeTest extends Unit
         $this->assertSame($this->wishlist->getName(), $wishlistTransfer->getName());
     }
 
-    /**
-     * @return void
-     */
     public function testAddItemShouldAddItem(): void
     {
         // Arrange
@@ -183,9 +171,6 @@ class WishlistFacadeTest extends Unit
         $this->assertNotEmpty($wishlistItemTransfer->getIdWishlistItem());
     }
 
-    /**
-     * @return void
-     */
     public function testAddNonExistingItemShouldSkipItem(): void
     {
         // Arrange
@@ -202,9 +187,6 @@ class WishlistFacadeTest extends Unit
         $this->assertEmpty($WishlistItemTransfer->getIdWishlistItem());
     }
 
-    /**
-     * @return void
-     */
     public function testAddItemToTheWishlistWithInvalidNameDoesNotCreateWishlist(): void
     {
         // Arrange
@@ -227,9 +209,6 @@ class WishlistFacadeTest extends Unit
         $this->assertNull($wishlistTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testAddItemShouldNotThrowExceptionWhenItemAlreadyExists(): void
     {
         // Arrange
@@ -246,9 +225,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(2);
     }
 
-    /**
-     * @return void
-     */
     public function testRemoveItemShouldNotThrowExceptionWhenItemIsAlreadyRemoved(): void
     {
         // Arrange
@@ -271,9 +247,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(1);
     }
 
-    /**
-     * @return void
-     */
     public function testRemoveItemShouldNotThrowExceptionWhenListIsEmpty(): void
     {
         // Arrange
@@ -295,9 +268,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(0);
     }
 
-    /**
-     * @return void
-     */
     public function testRemoveItemShouldRemoveItem(): void
     {
         // Arrange
@@ -315,9 +285,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(1);
     }
 
-    /**
-     * @return void
-     */
     public function testCreateWishlistShouldCreateWishlist(): void
     {
         // Arrange
@@ -335,9 +302,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateAndCreateWishlistShouldCreateWishlist(): void
     {
         // Arrange
@@ -358,9 +322,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateAndCreateWishlistShouldFailWhenNameIsNotUnique(): void
     {
         // Arrange
@@ -377,9 +338,6 @@ class WishlistFacadeTest extends Unit
         $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateAndCreateWishlistShouldFailWhenNameConsistsOfSpaces(): void
     {
         // Arrange
@@ -395,9 +353,6 @@ class WishlistFacadeTest extends Unit
         $this->assertCount(1, $wishlistResponseTransfer->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistShouldUpdateWishlist(): void
     {
         // Arrange
@@ -418,9 +373,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateAndUpdateWishlistShouldUpdateWishlist(): void
     {
         // Arrange
@@ -444,9 +396,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(2, $wishlistTransfer->getIdWishlist());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateAndUpdateWishlistShouldFailWhenNameIsNotUnique(): void
     {
         // Arrange
@@ -467,9 +416,6 @@ class WishlistFacadeTest extends Unit
         $this->assertCount(1, $wishlistTransferResponseTransfer->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateAndUpdateWishlistShouldFailWhenNameConsistsOfSpaces(): void
     {
         // Arrange
@@ -485,9 +431,6 @@ class WishlistFacadeTest extends Unit
         $this->assertCount(1, $wishlistResponseTransfer->getErrors());
     }
 
-    /**
-     * @return void
-     */
     public function testRemoveWishlistShouldRemoveItemsAsWell(): void
     {
         // Arrange
@@ -505,9 +448,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
     }
 
-    /**
-     * @return void
-     */
     public function testRemoveWishlistByNameShouldRemoveItemsAsWell(): void
     {
         // Arrange
@@ -524,9 +464,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(0, $wishlistTransfer->getIdWishlist());
     }
 
-    /**
-     * @return void
-     */
     public function testEmptyWishlistShouldRemoveItems(): void
     {
         // Arrange
@@ -544,9 +481,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(0);
     }
 
-    /**
-     * @return void
-     */
     public function testAddItemCollectionShouldAddItemCollection(): void
     {
         // Arrange
@@ -573,9 +507,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(3);
     }
 
-    /**
-     * @return void
-     */
     public function testRemoveItemCollectionShouldRemoveOnlySelectedItems(): void
     {
         // Arrange
@@ -611,9 +542,6 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(1);
     }
 
-    /**
-     * @return void
-     */
     public function testGetWishlistOverviewShouldReturnPaginatedResult(): void
     {
         // Arrange
@@ -651,9 +579,6 @@ class WishlistFacadeTest extends Unit
         $this->assertCount(7, $wishlistOverviewResponse->getWishlist()->getWishlistItems());
     }
 
-    /**
-     * @return void
-     */
     public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsByCustomerReference(): void
     {
         // Arrange
@@ -667,9 +592,6 @@ class WishlistFacadeTest extends Unit
         $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsByCustomerId(): void
     {
         // Arrange
@@ -685,9 +607,6 @@ class WishlistFacadeTest extends Unit
         $this->assertCount(3, $wishlistCollectionTransfer->getWishlists(), 'Customer wishlist collection should contain expected number of wishlists.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsWithItemsByCustomerReference(): void
     {
         // Arrange
@@ -710,9 +629,6 @@ class WishlistFacadeTest extends Unit
         }
     }
 
-    /**
-     * @return void
-     */
     public function testGetCustomerWishlistCollectionReturnsPersistedWishlistsWithItemsByCustomerId(): void
     {
         // Arrange
@@ -728,9 +644,6 @@ class WishlistFacadeTest extends Unit
         $this->assertSame(2, $wishlistTransferActual->getNumberOfItems(), 'Customer wishlist should contain expected number of wishlist items.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetCustomerWishlistCollectionEnsureThatNumberOfItemsIsZero(): void
     {
         // Arrange
@@ -750,9 +663,6 @@ class WishlistFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testGetWishlistByFilterShouldReturnWishlistByName(): void
     {
         // Arrange
@@ -778,9 +688,6 @@ class WishlistFacadeTest extends Unit
         $this->assertContains($this->product_1->getSku(), $itemSkus, 'Wishlist item sku is unexpected.');
     }
 
-    /**
-     * @return void
-     */
     public function testGetWishlistByFilterShouldReturnErrorInCaseWishlistIsNotFoundByName(): void
     {
         // Arrange
@@ -798,9 +705,6 @@ class WishlistFacadeTest extends Unit
         $this->assertNull($wishlistResponseTransfer->getWishlist(), 'No wishlist should be returned.');
     }
 
-    /**
-     * @return void
-     */
     public function testValidateWishlistItemBeforeCreationReturnsSuccessfullResponseIfWishlistExists(): void
     {
         // Act
@@ -811,9 +715,6 @@ class WishlistFacadeTest extends Unit
         $this->assertTrue($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateWishlistItemBeforeCreationtReturnsSuccessfullResponseIfWishlistHasDefaultName(): void
     {
         // Arrange
@@ -829,9 +730,6 @@ class WishlistFacadeTest extends Unit
         $this->assertTrue($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateWishlistItemBeforeCreationReturnsSuccessfullResponseIfWishlistNameIsAnEmptyString(): void
     {
         // Arrange
@@ -847,9 +745,6 @@ class WishlistFacadeTest extends Unit
         $this->assertTrue($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
     }
 
-    /**
-     * @return void
-     */
     public function testValidateWishlistItemBeforeCreationReturnsNotSuccessfullResponseIfWishlistDoesNotExist(): void
     {
         // Arrange
@@ -873,12 +768,6 @@ class WishlistFacadeTest extends Unit
         $this->assertFalse($wishlistPreAddItemCheckResponseTransfer->getIsSuccess());
     }
 
-    /**
-     * @param int $expected
-     * @param int|null $idWishlist
-     *
-     * @return void
-     */
     protected function assertWishlistItemCount(int $expected, ?int $idWishlist = null): void
     {
         if (!$idWishlist) {
@@ -892,11 +781,6 @@ class WishlistFacadeTest extends Unit
         $this->assertSame($expected, $count);
     }
 
-    /**
-     * @param int $expected
-     *
-     * @return void
-     */
     protected function assertWishlistCount(int $expected): void
     {
         $count = $this->wishlistQueryContainer
@@ -907,9 +791,6 @@ class WishlistFacadeTest extends Unit
         $this->assertSame($expected, $count);
     }
 
-    /**
-     * @return void
-     */
     protected function removeItemsFromWishlist(): void
     {
         $this->wishlistQueryContainer

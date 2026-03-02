@@ -26,19 +26,11 @@ class WishlistItemValidator implements WishlistItemValidatorInterface
      */
     protected WishlistRepositoryInterface $wishlistRepository;
 
-    /**
-     * @param \Spryker\Zed\Wishlist\Persistence\WishlistRepositoryInterface $wishlistRepository
-     */
     public function __construct(WishlistRepositoryInterface $wishlistRepository)
     {
         $this->wishlistRepository = $wishlistRepository;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistPreAddItemCheckResponseTransfer
-     */
     public function validateWishlistItemBeforeCreation(
         WishlistItemTransfer $wishlistItemTransfer
     ): WishlistPreAddItemCheckResponseTransfer {
@@ -50,11 +42,6 @@ class WishlistItemValidator implements WishlistItemValidatorInterface
             );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return bool
-     */
     protected function hasExistingWishlist(WishlistItemTransfer $wishlistItemTransfer): bool
     {
         return $this->wishlistRepository->findWishlistByFilter(

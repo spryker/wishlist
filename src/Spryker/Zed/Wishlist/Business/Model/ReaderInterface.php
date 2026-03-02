@@ -58,24 +58,9 @@ interface ReaderInterface
      */
     public function getCustomerWishlistCollection(CustomerTransfer $customerTransfer);
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer|null
-     */
     public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
     public function getWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer;
 }

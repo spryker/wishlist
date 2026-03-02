@@ -19,11 +19,6 @@ class WishlistHelper extends Module
 {
     use LocatorHelperTrait;
 
-    /**
-     * @param array $override
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
     public function haveWishlist(array $override): WishlistTransfer
     {
         $wishlistTransfer = (new WishlistBuilder($override))->build();
@@ -31,11 +26,6 @@ class WishlistHelper extends Module
         return $this->getWishlistFacade()->validateAndCreateWishlist($wishlistTransfer)->getWishlist();
     }
 
-    /**
-     * @param array $override
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function haveItemInWishlist(array $override): WishlistItemTransfer
     {
         $wishlistItemTransfer = (new WishlistItemBuilder($override))
@@ -44,9 +34,6 @@ class WishlistHelper extends Module
         return $this->getWishlistFacade()->addItem($wishlistItemTransfer);
     }
 
-    /**
-     * @return \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface
-     */
     public function getWishlistFacade(): WishlistFacadeInterface
     {
         return $this->getLocatorHelper()->getLocator()->wishlist()->facade();

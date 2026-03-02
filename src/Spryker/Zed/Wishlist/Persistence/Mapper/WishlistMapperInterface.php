@@ -27,45 +27,21 @@ interface WishlistMapperInterface
         WishlistCollectionTransfer $wishlistCollectionTransfer
     ): WishlistCollectionTransfer;
 
-    /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
     public function mapWishlistEntityToWishlistTransfer(
         SpyWishlist $wishlistEntity,
         WishlistTransfer $wishlistTransfer
     ): WishlistTransfer;
 
-    /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlist $wishlistEntity
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
     public function mapWishlistEntityToWishlistTransferIncludingWishlistItems(
         SpyWishlist $wishlistEntity,
         WishlistTransfer $wishlistTransfer
     ): WishlistTransfer;
 
-    /**
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function mapWishlistItemEntityToWishlistItemTransfer(
         SpyWishlistItem $wishlistItemEntity,
         WishlistItemTransfer $wishlistItemTransfer
     ): WishlistItemTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     * @param \Orm\Zed\Wishlist\Persistence\SpyWishlistItem $wishlistItemEntity
-     *
-     * @return \Orm\Zed\Wishlist\Persistence\SpyWishlistItem
-     */
     public function mapWishlistItemTransferToWishlistItemEntity(
         WishlistItemTransfer $wishlistItemTransfer,
         SpyWishlistItem $wishlistItemEntity

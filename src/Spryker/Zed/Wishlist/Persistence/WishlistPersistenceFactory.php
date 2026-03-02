@@ -46,9 +46,6 @@ class WishlistPersistenceFactory extends AbstractPersistenceFactory
         return SpyProductQuery::create();
     }
 
-    /**
-     * @return \Spryker\Zed\Wishlist\Persistence\Mapper\WishlistMapperInterface
-     */
     public function createWishlistMapper(): WishlistMapperInterface
     {
         return new WishlistMapper();

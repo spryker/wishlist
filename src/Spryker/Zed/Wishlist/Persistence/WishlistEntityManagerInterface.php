@@ -11,24 +11,9 @@ use Generated\Shared\Transfer\WishlistItemTransfer;
 
 interface WishlistEntityManagerInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function addItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function deleteItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function updateWishlistItem(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer;
 }

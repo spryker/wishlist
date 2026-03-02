@@ -209,13 +209,6 @@ class CartHandler implements CartHandlerInterface
         return $skuIndex;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer
-     */
     protected function executeWishlistPostMoveToCartCollectionExpanderPlugins(
         WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionDiffTransfer,
         QuoteTransfer $quoteTransfer,
@@ -232,13 +225,6 @@ class CartHandler implements CartHandlerInterface
         return $wishlistMoveToCartRequestCollectionDiffTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer
-     * @param \Generated\Shared\Transfer\WishlistMoveToCartRequestCollectionTransfer $failedWishlistMoveToCartRequestCollectionTransfer
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
-     */
     protected function executeWishlistCollectionToRemoveExpanderPlugins(
         WishlistMoveToCartRequestCollectionTransfer $wishlistMoveToCartRequestCollectionTransfer,
         WishlistMoveToCartRequestCollectionTransfer $failedWishlistMoveToCartRequestCollectionTransfer,

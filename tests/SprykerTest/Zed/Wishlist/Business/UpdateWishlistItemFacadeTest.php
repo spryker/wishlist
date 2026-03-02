@@ -78,9 +78,6 @@ class UpdateWishlistItemFacadeTest extends Unit
      */
     protected $productConcreteTransfer;
 
-    /**
-     * @return void
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -94,9 +91,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         ]);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistItemEnsureThatWishlistItemPropertyCanBeUpdated(): void
     {
         // Arrange
@@ -121,9 +115,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistItemWithFakeWishlistItemId(): void
     {
         // Arrange
@@ -144,9 +135,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistItemWithoutExpectedProperties(): void
     {
         // Arrange
@@ -166,9 +154,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistItemEnsureThatNewProductIsExists(): void
     {
         // Arrange
@@ -191,9 +176,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistItemEnsureThatNewProductIsActive(): void
     {
         // Arrange
@@ -217,9 +199,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         );
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistItemEnsureThatUpdateItemPreCheckPluginStackExecuted(): void
     {
         // Arrange
@@ -239,9 +218,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         $this->tester->getFacade()->updateWishlistItem($wishlistItemTransfer);
     }
 
-    /**
-     * @return void
-     */
     public function testUpdateWishlistItemEnsureThatWishlistPreUpdateItemPluginStackExecuted(): void
     {
         // Arrange
@@ -297,9 +273,6 @@ class UpdateWishlistItemFacadeTest extends Unit
         return $wishlistPreUpdateItemPluginMock;
     }
 
-    /**
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     protected function createDefaultWishlistItem(): WishlistItemTransfer
     {
         return $this->tester->haveItemInWishlist([

@@ -503,11 +503,6 @@ class Writer implements WriterInterface
         return $query->count() === 0;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return bool
-     */
     protected function isWishListNameValid(WishlistTransfer $wishlistTransfer): bool
     {
         $wishlistTransfer->requireName();
@@ -515,11 +510,6 @@ class Writer implements WriterInterface
         return (bool)preg_match(static::WISH_LIST_NAME_VALIDATION_REGEX, trim($wishlistTransfer->getName()));
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return bool
-     */
     protected function preAddItemCheck(WishlistItemTransfer $wishlistItemTransfer): bool
     {
         foreach ($this->addItemPreCheckPlugins as $preAddItemCheckPlugin) {
@@ -532,11 +522,6 @@ class Writer implements WriterInterface
         return true;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     protected function executeWishlistPreAddItemPlugins(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
         foreach ($this->wishlistPreAddItemPlugins as $wishlistPreAddItemPlugin) {

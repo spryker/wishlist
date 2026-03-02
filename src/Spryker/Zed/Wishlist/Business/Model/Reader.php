@@ -171,11 +171,6 @@ class Reader implements ReaderInterface
         return $wishlistOverviewResponseTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer|null
-     */
     public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer
     {
         $wishlistItemTransfer = $this->wishlistRepository->findWishlistItem($wishlistItemCriteriaTransfer);
@@ -189,11 +184,6 @@ class Reader implements ReaderInterface
         return $wishlistItemTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemResponseTransfer
-     */
     public function getWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): WishlistItemResponseTransfer
     {
         $wishlistItemResponseTransfer = new WishlistItemResponseTransfer();
@@ -481,11 +471,6 @@ class Reader implements ReaderInterface
         return $this->getCollectionByIdCustomer($idCustomer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistResponseTransfer
-     */
     public function getWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): WishlistResponseTransfer
     {
         $wishlistFilterTransfer->requireIdCustomer();
@@ -548,21 +533,11 @@ class Reader implements ReaderInterface
         return $wishlistCollection;
     }
 
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
-     */
     protected function getCollectionByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
         return $this->wishlistRepository->getByCustomerReference($customerReference);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
     protected function reloadWishlistItems(WishlistTransfer $wishlistTransfer): WishlistTransfer
     {
         foreach ($this->wishlistReloadItemsPlugins as $wishlistReloadItemsPlugin) {
@@ -574,12 +549,6 @@ class Reader implements ReaderInterface
         return $wishlistTransfer;
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     * @param \Generated\Shared\Transfer\WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
-     *
-     * @return void
-     */
     protected function validateWishlistItems(
         WishlistTransfer $wishlistTransfer,
         WishlistOverviewResponseTransfer $wishlistOverviewResponseTransfer
@@ -601,11 +570,6 @@ class Reader implements ReaderInterface
         }
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     protected function executeWishlistItemExpanderPlugins(WishlistItemTransfer $wishlistItemTransfer): WishlistItemTransfer
     {
         foreach ($this->wishlistItemExpanderPlugins as $wishlistItemExpanderPlugin) {

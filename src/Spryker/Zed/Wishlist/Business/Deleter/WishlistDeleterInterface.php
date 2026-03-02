@@ -11,10 +11,5 @@ use Generated\Shared\Transfer\WishlistItemCollectionTransfer;
 
 interface WishlistDeleterInterface
 {
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemCollectionTransfer
-     */
     public function deleteItemCollection(WishlistItemCollectionTransfer $wishlistItemTransferCollectionTransfer): WishlistItemCollectionTransfer;
 }

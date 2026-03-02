@@ -23,11 +23,6 @@ use Spryker\Zed\Kernel\Persistence\AbstractRepository;
  */
 class WishlistRepository extends AbstractRepository implements WishlistRepositoryInterface
 {
-    /**
-     * @param string $customerReference
-     *
-     * @return \Generated\Shared\Transfer\WishlistCollectionTransfer
-     */
     public function getByCustomerReference(string $customerReference): WishlistCollectionTransfer
     {
         /** @var \Orm\Zed\Wishlist\Persistence\SpyWishlistQuery $wishlistQuery */
@@ -50,11 +45,6 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             ->mapWishlistEntitiesToWishlistCollectionTransfer($wishlistEntities, new WishlistCollectionTransfer());
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistFilterTransfer $wishlistFilterTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer|null
-     */
     public function findWishlistByFilter(WishlistFilterTransfer $wishlistFilterTransfer): ?WishlistTransfer
     {
         $alias = uniqid('swi_');
@@ -90,11 +80,6 @@ class WishlistRepository extends AbstractRepository implements WishlistRepositor
             );
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer|null
-     */
     public function findWishlistItem(WishlistItemCriteriaTransfer $wishlistItemCriteriaTransfer): ?WishlistItemTransfer
     {
         $wishlistItemQuery = $this->getFactory()

@@ -21,11 +21,6 @@ class WishlistDataHelper extends Module
     use DataCleanupHelperTrait;
     use LocatorHelperTrait;
 
-    /**
-     * @param array $override
-     *
-     * @return \Generated\Shared\Transfer\WishlistTransfer
-     */
     public function haveWishlist(array $override): WishlistTransfer
     {
         $wishlistTransfer = (new WishlistBuilder($override))->build();
@@ -40,11 +35,6 @@ class WishlistDataHelper extends Module
         return $wishlistTransfer;
     }
 
-    /**
-     * @param array $override
-     *
-     * @return \Generated\Shared\Transfer\WishlistItemTransfer
-     */
     public function haveItemInWishlist(array $override): WishlistItemTransfer
     {
         $wishlistItemTransfer = (new WishlistItemBuilder($override))->build();
@@ -57,29 +47,16 @@ class WishlistDataHelper extends Module
         return $wishlistItemTransfer;
     }
 
-    /**
-     * @return \Spryker\Zed\Wishlist\Business\WishlistFacadeInterface
-     */
     protected function getWishlistFacade(): WishlistFacadeInterface
     {
         return $this->getLocator()->wishlist()->facade();
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistTransfer $wishlistTransfer
-     *
-     * @return void
-     */
     protected function cleanupWishlist(WishlistTransfer $wishlistTransfer): void
     {
         $this->getWishlistFacade()->removeWishlist($wishlistTransfer);
     }
 
-    /**
-     * @param \Generated\Shared\Transfer\WishlistItemTransfer $wishlistItemTransfer
-     *
-     * @return void
-     */
     protected function cleanupWishlistItem(WishlistItemTransfer $wishlistItemTransfer): void
     {
         $this->getWishlistFacade()->removeItem($wishlistItemTransfer);
