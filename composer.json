@@ -19,6 +19,7 @@
         "spryker/code-sniffer": "*",
         "spryker/container": "*",
         "spryker/propel": "*",
+        "spryker/ramsey-uuid": "*",
         "spryker/store": "*",
         "spryker/testify": "*"
     },

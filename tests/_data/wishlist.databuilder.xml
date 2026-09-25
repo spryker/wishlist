@@ -6,6 +6,7 @@
 >
     <transfer name="Wishlist">
         <property name="name" dataBuilderRule="unique()->lexify('??????????')"/>
+        <property name="numberOfItems" dataBuilderRule="numberBetween(1, 10)"/>
     </transfer>
 
     <transfer name="WishlistItem">
