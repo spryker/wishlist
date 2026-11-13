@@ -9,6 +9,7 @@ namespace Spryker\Zed\Wishlist\Persistence;
 
 use Generated\Shared\Transfer\WishlistItemCriteriaTransfer;
 use Generated\Shared\Transfer\WishlistItemTransfer;
+use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistTableMap;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
@@ -102,6 +103,23 @@ class WishlistEntityManager extends AbstractEntityManager implements WishlistEnt
             $wishlistItemQuery->filterBySku($wishlistItemTransfer->getSku());
         }
 
+        if ($wishlistItemTransfer->getFkCustomer()) {
+            $wishlistItemQuery->filterByFkWishlist_In($this->getCustomerWishlistIds($wishlistItemTransfer->getFkCustomer()));
+        }
+
         return $wishlistItemQuery;
+    }
+
+    /**
+     * @return array<int>
+     */
+    protected function getCustomerWishlistIds(int $idCustomer): array
+    {
+        return $this->getFactory()
+            ->createWishlistQuery()
+            ->filterByFkCustomer($idCustomer)
+            ->select(SpyWishlistTableMap::COL_ID_WISHLIST)
+            ->find()
+            ->getData();
     }
 }

@@ -285,6 +285,40 @@ class WishlistFacadeTest extends Unit
         $this->assertWishlistItemCount(1);
     }
 
+    public function testRemoveItemShouldNotRemoveItemOfAnotherCustomer(): void
+    {
+        // Arrange
+        $anotherCustomerTransfer = $this->tester->haveCustomer();
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setWishlistName($this->wishlist->getName())
+            ->setFkCustomer($anotherCustomerTransfer->getIdCustomer())
+            ->setSku($this->product_1->getSku())
+            ->setIdWishlistItem($this->wishlistItem_1->getIdWishlistItem());
+
+        // Act
+        $this->wishlistFacade->removeItem($wishlistItemTransfer);
+
+        // Assert
+        $this->assertWishlistItemCount(2);
+        $this->assertWishlistContainsSku($this->product_1->getSkuOrFail());
+    }
+
+    public function testRemoveItemShouldNotRemoveItemOfAnotherCustomerWhenOnlySkuIsProvided(): void
+    {
+        // Arrange
+        $wishlistItemTransfer = (new WishlistItemTransfer())
+            ->setWishlistName($this->wishlist->getName())
+            ->setFkCustomer($this->tester->haveCustomer()->getIdCustomer())
+            ->setSku($this->product_1->getSku());
+
+        // Act
+        $this->wishlistFacade->removeItem($wishlistItemTransfer);
+
+        // Assert
+        $this->assertWishlistItemCount(2);
+        $this->assertWishlistContainsSku($this->product_1->getSkuOrFail());
+    }
+
     public function testCreateWishlistShouldCreateWishlist(): void
     {
         // Arrange
@@ -779,6 +813,16 @@ class WishlistFacadeTest extends Unit
             ->count();
 
         $this->assertSame($expected, $count);
+    }
+
+    protected function assertWishlistContainsSku(string $sku): void
+    {
+        $count = $this->wishlistQueryContainer
+            ->queryItemsByWishlistId($this->wishlist->getIdWishlistOrFail())
+            ->filterBySku($sku)
+            ->count();
+
+        $this->assertSame(1, $count);
     }
 
     protected function assertWishlistCount(int $expected): void
